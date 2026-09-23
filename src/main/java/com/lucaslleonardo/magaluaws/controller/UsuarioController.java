@@ -33,6 +33,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "500", description = "Erro ao cadastrar usuario")
     })
     public UsuarioResponse save(@Valid @RequestBody UsuarioPostRequest usuarioPostRequest){
+        log.info("Requisicao para criar usuario");
         return usuarioService.save(usuarioPostRequest);
     }
 
@@ -44,7 +45,8 @@ public class UsuarioController {
             @ApiResponse(responseCode = "500", description = "Erro ao atualizar a senha")
     })
     public void update(@Valid @RequestBody UsuarioPatchRequest usuarioPatchRequest, @PathVariable Long id){
-         usuarioService.update(usuarioPatchRequest, id);
+        log.info("Requisicao para atualizar usuario");
+        usuarioService.update(usuarioPatchRequest, id);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -52,6 +54,7 @@ public class UsuarioController {
     @Operation(summary = "Deleta usuario")
     @ApiResponse(responseCode = "404", description = "Usuario nao encontrado")
     public void delete(@PathVariable Long id){
+        log.info("Requisicao para deletar usuario");
         usuarioService.delete(id);
     }
 }
