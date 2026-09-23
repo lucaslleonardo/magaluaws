@@ -1,9 +1,6 @@
 package com.lucaslleonardo.magaluaws.handler;
 
-import com.lucaslleonardo.magaluaws.exception.EmailJaUsadoException;
-import com.lucaslleonardo.magaluaws.exception.ErroAoAtualizarSenha;
-import com.lucaslleonardo.magaluaws.exception.ErroAoCadastrarException;
-import com.lucaslleonardo.magaluaws.exception.UsuarioNaoEncontradoException;
+import com.lucaslleonardo.magaluaws.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -48,6 +45,24 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ErroAoAtualizarSenha.class)
     public ResponseEntity<ErrorResponse> handleErroAoAtualizarSenha(ErroAoAtualizarSenha ex){
         return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(ErroAoEnviarMensagemException.class)
+    public ResponseEntity<ErrorResponse> handleErroAoEnviarMensagemException(ErroAoEnviarMensagemException ex){
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(MensagemNaoEncontradaException.class)
+    public ResponseEntity<ErrorResponse> handleMensagemNaoEncontradaException(MensagemNaoEncontradaException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(ErroAlterarStatusMensagemException.class)
+    public ResponseEntity<ErrorResponse> handleErroAlterarStatusMensagemException(ErroAlterarStatusMensagemException ex){
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage()));
     }
 }

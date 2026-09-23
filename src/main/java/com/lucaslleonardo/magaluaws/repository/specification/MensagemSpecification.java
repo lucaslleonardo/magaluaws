@@ -10,12 +10,12 @@ public class MensagemSpecification {
 
     public static Specification<MensagemEntity> statusMensagem(StatusMensagem statusMensagem){
         return ((root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("status"), statusMensagem));
+                criteriaBuilder.equal(root.get("statusMensagem"), statusMensagem));
     }
 
     public static Specification<MensagemEntity>  tipoMensagem(TipoMensagem tipoMensagem){
         return ((root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("tipo"), tipoMensagem));
+                criteriaBuilder.equal(root.get("tipoMensagem"), tipoMensagem));
     }
 
 
