@@ -5,5 +5,5 @@ import com.lucaslleonardo.magaluaws.model.roles.TipoMensagem;
 
 import java.time.LocalDateTime;
 
-public record MensagemResponse(StatusMensagem status, TipoMensagem tipoMensagem, LocalDateTime dataEnvio, String destinatario, String mensagem) {
+public record MensagemResponse(StatusMensagem statusMensagem, TipoMensagem tipoMensagem, LocalDateTime dataEnvio, String destinatario, String mensagem) {
 }

@@ -26,7 +26,6 @@ public class MensagemPostRequest {
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime dataEnvio;
 
-
     @NotNull
     private TipoMensagem tipoMensagem;
 }

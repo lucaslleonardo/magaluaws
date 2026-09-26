@@ -45,7 +45,7 @@ public class MensagemController {
         return mensagemService.getConsulta(id);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Retorna todas mensagens")
     public List<MensagemResponse> getAll(MensagemFilterRequest filterRequest) {
