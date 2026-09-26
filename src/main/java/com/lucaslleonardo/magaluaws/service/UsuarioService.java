@@ -12,6 +12,7 @@ import com.lucaslleonardo.magaluaws.model.entity.UsuarioEntity;
 import com.lucaslleonardo.magaluaws.repository.IUsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +22,7 @@ public class UsuarioService {
 
     private final IUsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
+    private final PasswordEncoder passwordEncoder;
 
 
     public UsuarioResponse save (UsuarioPostRequest usuarioPostRequest) {
@@ -33,6 +35,8 @@ public class UsuarioService {
         log.info("Cadastra o usuario com o email {}",usuarioPostRequest.getEmail());
         UsuarioEntity usuarioEntity = usuarioMapper.toEntity(usuarioPostRequest);
 
+        usuarioEntity.setPassword(passwordEncoder.encode(usuarioPostRequest.getPassword()));
+
         try{
             UsuarioEntity usuario = usuarioRepository.save(usuarioEntity);
             return usuarioMapper.toResponse(usuario);
@@ -44,18 +48,20 @@ public class UsuarioService {
     }
 
     public void update(UsuarioPatchRequest usuarioPatchRequest, Long id) {
-        log.info("Busca o usuario com o id {}",id);
+        log.info("Busca o usuario com o id {}", id);
+
         UsuarioEntity usuarioEntity = usuarioRepository.findById(id)
                 .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuario nao encontrado"));
 
-        log.info("Altera a senha do usuario");
-        usuarioEntity.setPassword(usuarioPatchRequest.getPassword());
+        try {
+            log.info("Altera a senha do usuario");
 
-        try{
-            usuarioMapper.update(usuarioPatchRequest, usuarioEntity);
+            usuarioEntity.setPassword(passwordEncoder.encode(usuarioPatchRequest.getPassword()));
+
             usuarioRepository.save(usuarioEntity);
-        } catch(Exception e){
-            log.error("Erro ao atualizar a senha");
+
+        } catch (Exception e) {
+            log.error("Erro ao atualizar a senha", e);
             throw new ErroAoAtualizarSenha("Erro ao atualizar senha", e);
         }
     }
