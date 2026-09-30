@@ -20,4 +20,9 @@ jwt:
   secret: ${JWT_SECRET}
   expiration: ${JWT_EXPIRATION:3600000}
 
+aws:
+  sqs:
+    queue-url: ${AWS_SQS_QUEUE_URL}
+
+
 

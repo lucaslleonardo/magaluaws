@@ -25,6 +25,7 @@ public class MensagemService {
 
     private final IMensagemRepository mensagemRepository;
     private final MensagemMapper mensagemMapper;
+    private final SqsService sqsService;
 
     public MensagemResponse save(MensagemPostRequest mensagemPostRequest){
 
@@ -37,6 +38,9 @@ public class MensagemService {
         try {
             log.info("Salva a mensagem");
             MensagemEntity mensagemEntity = mensagemRepository.save(mensagem);
+
+            log.info("Envia mensagem pro sqs");
+            sqsService.enviarMensagem(mensagemEntity);
             return mensagemMapper.toResponse(mensagemEntity);
         }catch(Exception e){
             log.error("Erro ao enviar mensagem", e);

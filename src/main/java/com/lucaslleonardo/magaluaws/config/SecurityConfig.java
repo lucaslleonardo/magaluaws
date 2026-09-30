@@ -59,6 +59,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/mensagem/cancel/**").hasRole("ADMIN")
                         .requestMatchers("/mensagem/**").permitAll()
 
+                        //.requestMatchers("/sqs/**").permitAll()
+
                         .anyRequest().authenticated()
 
                 )
