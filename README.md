@@ -39,33 +39,7 @@ A aplicação é uma plataforma de agendamento de comunicações. Os canais supo
 A aplicação utiliza uma **arquitetura em camadas**, separando responsabilidades entre *controller*, *service*, *repository* e *entidades*.
 
 ```
-                 ┌──────────────┐
-                 │    Cliente   │
-                 └──────┬───────┘
-                        │
-                        ▼
-                 ┌──────────────┐
-                 │ Spring Boot  │
-                 │     API      │
-                 └──────┬───────┘
-                        │
-                 ┌──────┴───────┐
-                 ▼              ▼
-           ┌───────────┐  ┌───────────┐
-           │ Amazon RDS│  │ Amazon SQS│
-           │ PostgreSQL│  │   Queue   │
-           └─────┬─────┘  └───────────┘
-                 │
-           ┌─────▼──────┐
-           │ CloudWatch │
-           │    Logs    │
-           └────────────┘
-
-              EC2
-       ┌─────────────────┐
-       │     Docker      │
-       │  Spring Boot    │
-       └─────────────────┘
+![iamge alt](https://github.com/lucaslleonardo/magaluaws/blob/360c26ad091a697242e4916bd74f1238bb46b5b6/DiagramaAws.jpg)
 ```
 
 **Amazon EC2:** executa a aplicação Spring Boot em um container Docker. Um **Elastic IP** mantém o endereço público fixo, evitando atualizar o IP a cada reinicialização.
